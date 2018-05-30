@@ -11,6 +11,5 @@ import { createStore } from 'redux';
 import registerServiceWorker from './registerServiceWorker';
 
 
-const store = createStore()
 ReactDOM.render(<Root />, document.getElementById('root'));
 registerServiceWorker();

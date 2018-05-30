@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import redux from 'redux';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { listTracks } from './actions/actions';
 
 
 class App extends Component {
+
   render() {
     return (
       <div>
@@ -15,4 +18,16 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state){
+  return {
+    tracks: state.tracks
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({ 
+    listTracks: listTracks
+  },
+    dispatch)
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);

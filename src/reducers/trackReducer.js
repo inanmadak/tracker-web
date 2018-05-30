@@ -1,14 +1,21 @@
 import redux from 'redux';
 import * as actionTypes from '../actions/actionTypes';
 
-export default function(state = null, action){
+function trackReducer(state = null, action){
 
   switch(action.type){
-    case actionList.GET_TRACKS: 
+    case actionTypes.LIST_TRACKS: 
       return {...state, tracks: action.payload};
-    case actionList.SEARCH_TRACKS:
+    case actionTypes.SEARCH_TRACKS:
       return {...state, searchResult: action.payload};
-    case actionList.START_TRACK:
-      
+    case actionTypes.START_TRACK:
+      const tracks = state.tracks.slice(0);
+      tracks.push(action.payload);
+      return {...state, tracks:tracks};
+    default:
+      return state;
   }
+
 }
+
+export default trackReducer;
