@@ -8,6 +8,23 @@ import { listTracks } from './actions/actions';
 
 class App extends Component {
 
+  componentDidMount(){
+    this.props.listTracks();
+  }
+
+  renderTracks(){
+    if(this.props.tracks){
+      const { tracks } = this.state.props;
+
+      return tracks.map(track => {
+        return (
+          <div>{track.description}</div>
+        )
+      })
+    }
+
+    return <div>None</div>
+  }
   render() {
     return (
       <div>
@@ -24,10 +41,9 @@ function mapStateToProps(state){
   }
 }
 
-function mapDispatchToProps(dispatch){
-  return bindActionCreators({ 
-    listTracks: listTracks
-  },
-    dispatch)
+const mapDispatchToProps = dispatch => {
+  return { 
+    listTracks: () => dispatch({type: 'LIST_TRACKS'})
+  }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);
