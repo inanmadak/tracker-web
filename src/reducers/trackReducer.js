@@ -1,11 +1,12 @@
 import redux from 'redux';
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from '../sagas/actionTypes';
 
 function trackReducer(state = null, action){
 
   switch(action.type){
     case actionTypes.LIST_TRACKS: 
-      return {...state, tracks: action.payload};
+      console.log(action)
+      return action.payload;
     case actionTypes.SEARCH_TRACKS:
       return {...state, searchResult: action.payload};
     case actionTypes.START_TRACK:
