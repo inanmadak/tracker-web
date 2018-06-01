@@ -10,9 +10,13 @@ function trackReducer(state = null, action){
     case actionTypes.SEARCH_TRACKS:
       return {...state, searchResult: action.payload};
     case actionTypes.START_TRACK:
-      const tracks = state.tracks.slice(0);
-      tracks.push(action.payload);
-      return {...state, tracks:tracks};
+      const data = state.data.slice(0);
+      data.push(action.payload);
+      const news = Object.assign({}, state, {total: state.total + 1, data});
+      // news.total++;
+      // news.data = data;
+      console.log(news)
+      return news;
     default:
       return state;
   }

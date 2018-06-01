@@ -9,8 +9,8 @@ class TrackResource {
     return axios.get(`${api}/list?page=${page}&sort=${sort}`).then(map);
   }
 
-  start(){
-    return axios.post(`${api}/start`).then(map);
+  start(description = '', startNow = true){
+    return axios.post(`${api}/start`, { description, startNow}).then(map);
   }
 
   stop(trackId){
