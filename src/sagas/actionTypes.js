@@ -31,8 +31,8 @@ export const stopTrackReq = (id) => ({ type: STOP_TRACK_REQ, id})
 
 export const deleteTrackReq = (id) => ({ type: DELETE_TRACK_REQ, id})
 
-export const listTracksReq = (page = 1, sort = 'asc') => ({ type: LIST_TRACKS_REQ, page, sort})
+export const listTracksReq = (page = 1, sort = 'desc') => ({ type: LIST_TRACKS_REQ, page, sort})
 
-export const searchTracksReq = (text, page = 1, sort = 'asc') => ({ type: SEARCH_TRACKS_REQ, page, sort})
+export const searchTracksReq = (text, page = 1, sort = 'desc') => ({ type: SEARCH_TRACKS_REQ, page, sort})
 
-export const pageChangeReq = (to = 'next', sort = 'asc') => ({ type: PAGE_CHANGE_REQ, to, sort})
+export const pageChangeReq = (to = 'next', sort = 'desc') => { return { type: PAGE_CHANGE_REQ, to, sort}}

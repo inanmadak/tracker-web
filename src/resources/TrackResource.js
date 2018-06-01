@@ -5,7 +5,7 @@ const map = (res) => res.data;
 
 class TrackResource {
 
-  list(page = 1, sort = 'asc'){
+  list(page = 1, sort = 'desc'){
     return axios.get(`${api}/list?page=${page}&sort=${sort}`).then(map);
   }
 

@@ -9,7 +9,7 @@ import Modal from './Modal';
 class Home extends Component {
 
   componentDidMount() {
-    this.props.listTracks(1, 'asc');
+    this.props.listTracks(1, 'desc');
   }
 
   addTrack = (event) => {
@@ -39,7 +39,8 @@ class Home extends Component {
           <PaginationBar
             page={this.props.trackList.page || 1}
             total={this.props.trackList.total || 1}
-            
+            pageNext={this.props.pageChange.bind(this, 'next')}
+            pagePrev={this.props.pageChange.bind(this, 'prev')}
           ></PaginationBar>
         </div>
 
@@ -79,7 +80,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
   return {
     listTracks: (page, sort) => dispatch(actionTypes.listTracksReq(page, sort)),
-    addTrack: (description) => dispatch(actionTypes.startTrackReq(description))
+    addTrack: (description) => dispatch(actionTypes.startTrackReq(description)),
+    pageChange: (to, sort) => dispatch(actionTypes.pageChangeReq(to, sort))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

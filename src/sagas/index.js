@@ -56,14 +56,20 @@ function* deleteTrack(id) {
 
 export function* watchListTracks() {
 
-  const { page, sort } = yield take(actionTypes.LIST_TRACKS_REQ)
-  yield call(listTracks, { page, sort })
+  while(true){
+    const { page, sort } = yield take(actionTypes.LIST_TRACKS_REQ)
+    yield call(listTracks, { page, sort });
+  }
+  
 
 }
 
 export function* watchStartTrack() {
-  const { description } = yield take(actionTypes.START_TRACK_REQ);
-  yield call(startTrack, {description})
+  while(true){
+    const { description } = yield take(actionTypes.START_TRACK_REQ);
+    yield call(startTrack, {description})
+  }
+  
 }
 
 export function* watchStopTrack() {
@@ -78,16 +84,24 @@ export function* watchSearchTrack() {
   yield takeLatest(actionTypes.SEARCH_TRACKS_REQ, searchTrack);
 }
 
-export function* pageChangeReq() {
-  const state = yield select();
-  console.log(state);
-  const { to, sort } = yield takeLatest(actionTypes.PAGE_CHANGE_REQ);
+export function* pageChangeReq(params) {
+  let p = 1;
 
-  if (to === 'next') {
-    yield call(listTracks, state.trackList.page + 1)
-  } else if (to === 'prev') {
-    yield call(listTracks, state.trackList.page - 1);
+  while(true){
+    const { to, sort } = yield take(actionTypes.PAGE_CHANGE_REQ);
+
+    const state = yield select();
+
+    //TODO: API always returns 10 per page. For now harcoded.
+    if (to === 'next') {
+      p = (state.trackList.page < state.trackList.total) ? (state.trackList.page + 1) : state.trackList.total;
+      yield call(listTracks, {page: p})
+    } else if (to === 'prev') {
+      p = (state.trackList.page > 1) ? (state.trackList.page - 1) : 1;
+      yield call(listTracks, {page: p});
+    }
   }
+  
 }
 
 // export function* watchPageChange()
@@ -98,7 +112,7 @@ export function* rootSaga() {
     watchStartTrack(),
     watchDeleteTrack(),
     watchSearchTrack(),
-    watchStopTrack()
-    // pageChangeReq()
+    watchStopTrack(),
+    pageChangeReq()
   ])
 }
