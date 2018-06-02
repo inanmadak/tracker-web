@@ -1,7 +1,9 @@
 import redux from 'redux';
 import * as actionTypes from '../sagas/actionTypes';
 
-function trackReducer(state = null, action){
+const initialState = { page: 1, data: []};
+
+function trackReducer(state = initialState, action){
 
   let data = [];
 
@@ -24,7 +26,6 @@ function trackReducer(state = null, action){
 
       return {...state, data};
     case actionTypes.DELETE_TRACK:
-    console.log(data);
       if(action.payload.status){
         data = state.data.slice(0);
         let index = -1;

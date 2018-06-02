@@ -1,13 +1,14 @@
 import * as actionTypes from './actionTypes';
 import TrackResource from '../resources/TrackResource';
+import { delay } from 'redux-saga';
 import { call, put, all, takeLatest, select, take } from 'redux-saga/effects';
 
 
 export function* listTracks(params) {
 
   try {
-    const tracks = yield call(TrackResource.list, params.page, params.sort);
-    console.log(tracks);
+    const state = yield select();
+    const tracks = yield call(TrackResource.list, params.page, params.sort, state.searchText);
     yield put({ type: actionTypes.LIST_TRACKS, payload: tracks });
   } catch (err) {
     yield put({ type: actionTypes.LIST_TRACKS_FAIL, err })
@@ -33,10 +34,14 @@ function* stopTrack(params) {
   }
 }
 
-function* searchTrack(text) {
+function* searchTrack(params) {
   try {
-    const tracks = yield call(TrackResource.search, text);
-    yield put({ type: actionTypes.SEARCH_TRACKS, payload: tracks });
+    //const state = yield select();
+    console.log(params)
+    yield delay(500);
+    yield put({type: actionTypes.SEARCH_TRACKS, payload: params.text})
+    const tracks = yield call(listTracks, params.page, params.sort, params.text);
+
   } catch (err) {
     yield put({ type: actionTypes.SEARCH_TRACKS_FAIL, payload: err });
   }
@@ -44,7 +49,7 @@ function* searchTrack(text) {
 
 function* deleteTrack(params) {
   try {
-    const res = yield call(TrackResource.deleteTrack, params.id);
+    const res = yield call(TrackResource.delete, params.id);
     yield put({ type: actionTypes.DELETE_TRACK, payload: res });
   } catch (err) {
     yield put({ type: actionTypes.DELETE_TRACK_FAIL, payload: err });
@@ -88,7 +93,13 @@ export function* watchDeleteTrack() {
 }
 
 export function* watchSearchTrack() {
+
   yield takeLatest(actionTypes.SEARCH_TRACKS_REQ, searchTrack);
+  /* while(true){
+    const { text, page, sort } = yield take(actionTypes.SEARCH_TRACKS_REQ);
+    yield throttle(500, actionTypes.SEARCH_TRACKS_REQ, searchTrack, { text, page, sort })
+    //yield call(searchTrack, { text, page, sort })
+  }*/
 }
 
 export function* pageChangeReq(params) {

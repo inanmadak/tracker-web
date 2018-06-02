@@ -51,7 +51,7 @@ export default class TrackTable extends React.Component {
             <td>{track.description}</td>
             <td>{moment(track.start_time).format(LONG_FORMAT)}</td>
             <td>{(track.stop_time) ? moment(track.stop_time).format(LONG_FORMAT) : '-'}</td>
-            <td>{(duration) ? duration : liveDuration}</td>
+            <td className="text-right">{(duration) ? duration : liveDuration}</td>
             <td>
               <button className="btn btn-link" onClick={this.props.stopHandler.bind(this, track._id)}>Stop</button>
               <button className="btn btn-link" style={ {color: 'lightpink'} } onClick={this.props.deleteHandler.bind(this, track._id)}>Remove</button>
@@ -71,7 +71,7 @@ export default class TrackTable extends React.Component {
             <th>Description</th>
             <th>Started</th>
             <th>Stopped</th>
-            <th>Duration</th>
+            <th className="text-right">Duration</th>
             <th>Actions</th>
           </tr>
         </thead>

@@ -10,7 +10,7 @@ class Home extends Component {
 
   componentDidMount() {
     this.props.listTracks(1, 'desc');
-    // setTimeout(() => this.props.startTimer(), 500)
+    this.searchText = '';
   }
 
   addTrack = (event) => {
@@ -19,6 +19,11 @@ class Home extends Component {
 
   handleDescChange = (event) => {
     this.description = event.target.value;
+  }
+
+  handleSearchTextChange = (event) => {
+    this.searchText = event.target.value;
+    this.props.searchTracks(this.searchText, (this.props.trackList.page || 1), (this.props.trackList.sort || 'desc'));
   }
 
   handleConfirm = () => {
@@ -61,19 +66,19 @@ class Home extends Component {
           <div className="row">
             <div className="col-md-3">
               <button className="btn btn-primary mx-3 my-2" onClick={this.addTrack}>Add Track</button>
+              <span className="text-secondary">Total Tracks:</span><span className="text-primary">{this.props.trackList.total}</span>
             </div>
             <div className="col-md-6">
               <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Search description..." aria-label="Search description..." aria-describedby="basic-desc" />
-                <div className="input-group-append">
-                  <button className="btn btn-outline-secondary" type="button">Search</button>
-                </div>
+                <input type="text" 
+                  onChange={this.handleSearchTextChange} 
+                  className="form-control" placeholder="Search description..." aria-label="Search description..." aria-describedby="basic-desc" />
               </div>
             </div>
             <div className="col-md-3 text-right">
               <div className="btn btn-group">
-                <button className="btn btn-secondary">Asc</button>
-                <button className="btn btn-secondary">Desc</button>
+                <button className="btn btn-secondary" onClick={this.props.listTracks.bind(this, (this.props.trackList.page || 1), 'desc')}>Desc</button>
+                <button className="btn btn-secondary" onClick={this.props.listTracks.bind(this, (this.props.trackList.page || 1), 'asc')}>Asc</button>
               </div>
             </div>
 
@@ -99,11 +104,12 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => {
   return {
-    listTracks: (page, sort) => dispatch(actionTypes.listTracksReq(page, sort)),
+    listTracks: (page, sort, text) => dispatch(actionTypes.listTracksReq(page, sort, text)),
     addTrack: (description) => dispatch(actionTypes.startTrackReq(description)),
-    pageChange: (to, sort) => dispatch(actionTypes.pageChangeReq(to, sort)),
     stopTrack: (id) => dispatch(actionTypes.stopTrackReq(id)),
-    deleteTrack: (id) => dispatch(actionTypes.deleteTrackReq(id))
+    deleteTrack: (id) => dispatch(actionTypes.deleteTrackReq(id)),
+    pageChange: (to, sort) => dispatch(actionTypes.pageChangeReq(to, sort)),
+    searchTracks: (text, page, sort) => dispatch(actionTypes.searchTracksReq(text, page, sort))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

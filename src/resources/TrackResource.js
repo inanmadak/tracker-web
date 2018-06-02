@@ -5,8 +5,8 @@ const map = (res) => res.data;
 
 class TrackResource {
 
-  list(page = 1, sort = 'desc'){
-    return axios.get(`${api}/list?page=${page}&sort=${sort}`).then(map);
+  list(page = 1, sort = 'desc', text=''){
+    return axios.get(`${api}/list?page=${page}&sort=${sort}&text=${text}`).then(map);
   }
 
   start(description = '', startNow = true){
@@ -21,8 +21,8 @@ class TrackResource {
     return axios.get(`${api}/get?text=${text}`).then(map);
   }
 
-  remove(id){
-    return axios.delete(`${api}/track/${id}`).then(map);
+  delete(id){
+    return axios.delete(`${api}/${id}`).then(map);
   }
 }
 
