@@ -24,9 +24,9 @@ function* startTrack(params) {
   }
 }
 
-function* stopTrack(id) {
+function* stopTrack(params) {
   try {
-    const track = yield call(TrackResource.stop, id);
+    const track = yield call(TrackResource.stop, params.id);
     yield put({ type: actionTypes.STOP_TRACK, payload: track });
   } catch (err) {
     yield put({ type: actionTypes.STOP_TRACK_FAIL, payload: err });
@@ -42,12 +42,12 @@ function* searchTrack(text) {
   }
 }
 
-function* deleteTrack(id) {
+function* deleteTrack(params) {
   try {
-    const res = yield call(TrackResource.deleteTrack, id);
-    yield put({ type: actionTypes.SEARCH_TRACKS, payload: res });
+    const res = yield call(TrackResource.deleteTrack, params.id);
+    yield put({ type: actionTypes.DELETE_TRACK, payload: res });
   } catch (err) {
-    yield put({ type: actionTypes.SEARCH_TRACKS_FAIL, payload: err });
+    yield put({ type: actionTypes.DELETE_TRACK_FAIL, payload: err });
   }
 }
 
@@ -73,11 +73,18 @@ export function* watchStartTrack() {
 }
 
 export function* watchStopTrack() {
-  yield takeLatest(actionTypes.STOP_TRACK_REQ, stopTrack);
+  while(true){
+    const { id } = yield take(actionTypes.STOP_TRACK_REQ);
+    yield call(stopTrack, { id })
+  }
+  
 }
 
 export function* watchDeleteTrack() {
-  yield takeLatest(actionTypes.DELETE_TRACK_REQ, deleteTrack);
+  while(true){
+    const { id } = yield take(actionTypes.DELETE_TRACK_REQ);
+    yield call(deleteTrack, {id})
+  }
 }
 
 export function* watchSearchTrack() {
