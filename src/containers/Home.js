@@ -40,7 +40,7 @@ class Home extends Component {
         <div>
           <div className="row">
             <div className="col-md-12">
-              <TrackTable tracks={trackList.data} stopHandler={this.props.stopTrack} 
+              <TrackTable tracks={trackList.data} stopHandler={this.props.stopTrack}
                 deleteHandler={this.props.deleteTrack}></TrackTable>
             </div>
           </div>
@@ -69,11 +69,11 @@ class Home extends Component {
               <span className="text-secondary">Total Tracks:</span><span className="text-primary">{this.props.trackList.total}</span>
             </div>
             <div className="col-md-6">
-              <div className="input-group mb-3">
-                <input type="text" 
-                  onChange={this.handleSearchTextChange} 
-                  className="form-control" placeholder="Search description..." aria-label="Search description..." aria-describedby="basic-desc" />
-              </div>
+
+              <input type="text"
+                onChange={this.handleSearchTextChange}
+                className="form-control" placeholder="Search description..." aria-label="Search description..." aria-describedby="basic-desc" />
+
             </div>
             <div className="col-md-3 text-right">
               <div className="btn btn-group">
