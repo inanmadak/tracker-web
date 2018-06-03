@@ -1,9 +1,5 @@
 
 
-export function trackListSelector(state, args){
-  return state.trackList;
-}
+export const trackListSelector = state => state.trackList
 
-export function searchTextSelector(state, args){
-  return state.searchText;
-}
+export const searchTextSelector = state => state.searchText

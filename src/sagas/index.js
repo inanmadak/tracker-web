@@ -106,17 +106,17 @@ export function* pageChangeReq(params) {
 
   while(true){
 
-    const state = yield select(selectors.trackListSelector);
+    const state = yield select();
 
     const { to, sort } = yield take(actionTypes.PAGE_CHANGE_REQ);
 
     //TODO: API always returns 10 per page. For now harcoded.
     if (to === 'next') {
       p = (state.trackList.page < state.trackList.total) ? (state.trackList.page + 1) : state.trackList.total;
-      yield call(listTracks, {page: p, sort})
+      yield call(listTracks, {page: p, sort: sort})
     } else {
       p = (state.trackList.page > 1) ? (state.trackList.page - 1) : 1;
-      yield call(listTracks, {page: p, sort});
+      yield call(listTracks, {page: p, sort: sort});
     }
   }
   
