@@ -16,7 +16,7 @@ test('watchListTracks test', () => {
 
 test('watchStartTrack test', () => {
   const gen = sagas.watchStartTrack();
-  const params = { description: 'test me'}
+  const params = { description: 'test me', booktime: ''}
 
   expect(gen.next().value).toEqual(take(actionTypes.START_TRACK_REQ));
 
