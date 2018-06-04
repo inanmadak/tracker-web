@@ -1,4 +1,3 @@
-import redux from 'redux';
 import * as actionTypes from '../sagas/actionTypes';
 
 const initialState = { page: 1, data: []};
@@ -31,9 +30,9 @@ function trackReducer(state = initialState, action){
         let index = -1;
         
 
-        data.forEach((item, index, arr) => {
+        data.forEach((item, i, arr) => {
           if(item._id == action.payload.id){
-            index = index;
+            index = i;
           }
         })
 

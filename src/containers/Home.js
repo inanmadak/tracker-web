@@ -3,7 +3,7 @@ import * as actionTypes from '../sagas/actionTypes';
 import { connect } from 'react-redux';
 import TrackTable from '../components/TrackTable';
 import PaginationBar from './PaginationBar';
-import Modal from './Modal';
+import Modal from '../components/Modal';
 
 
 class Home extends Component {
@@ -21,15 +21,21 @@ class Home extends Component {
     this.description = event.target.value;
   }
 
+  handleBookTimeChange = (event) => {
+    this.booktime = event.target.value;
+  }
+
   handleSearchTextChange = (event) => {
     this.searchText = event.target.value;
     this.props.searchTracks(this.searchText, (this.props.trackList.page || 1), (this.props.trackList.sort || 'desc'));
   }
 
   handleConfirm = () => {
-    this.props.addTrack(this.description);
-  }
+    this.props.addTrack(this.description, this.booktime);
+    this.booktime = '';
+    this.description = '';
 
+  }
 
   renderTracks() {
 
@@ -61,12 +67,12 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div className="container" style={{marginBottom: '150px'}}>
+        <div className="container" style={{ marginBottom: '150px' }}>
           <h2 className="text-center text-lg my-5 pt-3 mx-auto">Welcome to Tracker</h2>
           <div className="row">
             <div className="col-md-3">
               <button className="btn btn-primary mx-3 my-2" onClick={this.addTrack}>Add Track</button>
-              <span className="text-secondary">Total: </span><span className="text-primary">{this.props.trackList.total}</span>
+              <span className="text-secondary">Total: </span><span className="text-primary">{this.props.trackList.data.length}</span>
             </div>
             <div className="col-md-6">
 
@@ -75,6 +81,7 @@ class Home extends Component {
                 className="form-control" placeholder="Search description..." aria-label="Search description..." aria-describedby="basic-desc" />
 
             </div>
+
             <div className="col-md-3 text-right">
               <div className="btn btn-group">
                 <button className="btn btn-secondary" onClick={this.props.listTracks.bind(this, (this.props.trackList.page || 1), 'desc')}>Desc</button>
@@ -87,9 +94,14 @@ class Home extends Component {
         </div>
         <Modal id="addTrack" title="Add Track" confirmText="Save" confirmAction={this.handleConfirm} >
           <div className="col-md-10">
-            <label className="">Description</label>
-            <input className="form-control" onChange={this.handleDescChange} type="text" placeholder="Type description for track..." />
+            <label >Description</label>
+            <input value={this.description} className="form-control" onChange={this.handleDescChange} type="text" placeholder="Type description for track..." />
           </div>
+          <div className="col-md-10 mt-3">
+            <label title="If set, timer will automatically start when the time comes.">Desired time to start (optional)</label>
+            <input value={this.booktime} type="datetime-local" className="form-control" onChange={this.handleBookTimeChange} />
+          </div>
+
         </Modal>
       </div>
     );
@@ -105,7 +117,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
   return {
     listTracks: (page, sort, text) => dispatch(actionTypes.listTracksReq(page, sort, text)),
-    addTrack: (description) => dispatch(actionTypes.startTrackReq(description)),
+    addTrack: (description, booktime) => dispatch(actionTypes.startTrackReq(description, booktime)),
     stopTrack: (id) => dispatch(actionTypes.stopTrackReq(id)),
     deleteTrack: (id) => dispatch(actionTypes.deleteTrackReq(id)),
     pageChange: (to, sort) => dispatch(actionTypes.pageChangeReq(to, sort)),

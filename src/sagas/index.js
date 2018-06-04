@@ -19,7 +19,7 @@ export function* listTracks(params) {
 
 export function* startTrack(params) {
   try {
-    const track = yield call(TrackResource.start, params.description);
+    const track = yield call(TrackResource.start, params.description, params.booktime);
     yield put({ type: actionTypes.START_TRACK, payload: track })
   } catch (err) {
     yield put({ type: actionTypes.START_TRACK_FAIL, payload: err });
@@ -70,8 +70,8 @@ export function* watchListTracks() {
 
 export function* watchStartTrack() {
   while(true){
-    const { description } = yield take(actionTypes.START_TRACK_REQ);
-    yield call(startTrack, {description})
+    const { description, booktime } = yield take(actionTypes.START_TRACK_REQ);
+    yield call(startTrack, {description, booktime})
   }
   
 }

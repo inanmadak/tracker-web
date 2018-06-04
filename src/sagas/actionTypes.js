@@ -22,9 +22,10 @@ export const PAGE_CHANGE_REQ = 'PAGE_CHANGE_REQ';
 export const PAGE_CHANGE = 'PAGE_CHANGE';
 export const PAGE_CHANGE_FAIL = 'PAGE_CHANGE_FAIL';
 
-export const startTrackReq = (description) => ({
+export const startTrackReq = (description, booktime = '') => ({
   type: START_TRACK_REQ,
-  description
+  description,
+  booktime
 })
 
 export const stopTrackReq = (id) => ({ type: STOP_TRACK_REQ, id})
