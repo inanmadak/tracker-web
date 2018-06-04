@@ -78,10 +78,10 @@ test('listTracks works', () => {
 })
 
 test('startTrack works', () => {
-  const params = { type: actionTypes.START_TRACK, description: ''};
+  const params = { type: actionTypes.START_TRACK, description: '', booktime: ''};
   const gen = sagas.startTrack(params);
 
-  expect(gen.next().value).toEqual(call(TrackResource.start, params.description));
+  expect(gen.next().value).toEqual(call(TrackResource.start, params.description, params.booktime));
 
   expect(gen.next().value).toEqual(put({ type: actionTypes.START_TRACK}));
 })

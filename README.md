@@ -8,6 +8,9 @@ Navigate to the project directory. And run below commands:
 To start the project:
 - npm start 
 
+Visit 
+- localhost:3000
+
 To run tests:
 - npm test
 
