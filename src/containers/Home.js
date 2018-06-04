@@ -103,7 +103,7 @@ class Home extends Component {
             <input ref={(input) => this.descInput = input} className="form-control" onChange={this.handleDescChange} type="text" placeholder="Type description for track..." />
           </div>
           <div className="col-md-10 mt-3">
-            <label title="If set, timer will automatically start when the time comes.">Desired time to start (optional)</label>
+            <label title="If set, timer will automatically start when the time comes.">Desired time to start automatically (optional)</label>
             <input ref={(input) => this.bookInput = input} type="datetime-local" className="form-control" onChange={this.handleBookTimeChange} />
           </div>
 
