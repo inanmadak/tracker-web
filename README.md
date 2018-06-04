@@ -5,7 +5,7 @@ Navigate to the project directory. And run below commands:
 
 - npm install
 
-To start the project:
+To start the project (Make sure you have started API first):
 - npm start 
 
 Visit 
