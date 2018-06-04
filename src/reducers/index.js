@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 import  trackReducer from '../reducers/trackReducer';
+import searchReducer from '../reducers/searchReducer';
 
 const reducers = combineReducers({
-  tracks: trackReducer,
-  searchResult: trackReducer
+  trackList: trackReducer,
+  searchText: searchReducer
 })
 
 export default reducers;

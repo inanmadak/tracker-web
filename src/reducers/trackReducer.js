@@ -1,17 +1,46 @@
-import redux from 'redux';
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from '../sagas/actionTypes';
 
-function trackReducer(state = null, action){
+const initialState = { page: 1, data: []};
+
+function trackReducer(state = initialState, action){
+
+  let data = [];
 
   switch(action.type){
     case actionTypes.LIST_TRACKS: 
-      return {...state, tracks: action.payload};
-    case actionTypes.SEARCH_TRACKS:
-      return {...state, searchResult: action.payload};
+      action.payload.page = parseInt(action.payload.page);
+      return action.payload;
     case actionTypes.START_TRACK:
-      const tracks = state.tracks.slice(0);
-      tracks.push(action.payload);
-      return {...state, tracks:tracks};
+      data = state.data.slice(0);
+      data.unshift(action.payload);
+      const news = Object.assign({}, state, {total: state.total + 1, data});
+      return news;
+    case actionTypes.STOP_TRACK:
+      data = state.data.slice(0);
+      data.forEach((item, index, arr) => {
+        if(item._id == action.payload._id){
+          arr[index] = action.payload;
+        }
+      })
+
+      return {...state, data};
+    case actionTypes.DELETE_TRACK:
+      if(action.payload.status){
+        data = state.data.slice(0);
+        let index = -1;
+        
+
+        data.forEach((item, i, arr) => {
+          if(item._id == action.payload.id){
+            index = i;
+          }
+        })
+
+        data.splice(index, 1);
+        return {...state, data};
+      }
+
+      return state;
     default:
       return state;
   }
