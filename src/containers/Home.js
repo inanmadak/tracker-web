@@ -8,6 +8,10 @@ import Modal from '../components/Modal';
 
 class Home extends Component {
 
+  constructor(props){
+    super(props);
+  }
+
   componentDidMount() {
     this.props.listTracks(1, 'desc');
     this.searchText = '';
@@ -34,7 +38,8 @@ class Home extends Component {
     this.props.addTrack(this.description, this.booktime);
     this.booktime = '';
     this.description = '';
-
+    this.descInput.value = '';
+    this.bookInput.value = '';
   }
 
   renderTracks() {
@@ -95,11 +100,11 @@ class Home extends Component {
         <Modal id="addTrack" title="Add Track" confirmText="Save" confirmAction={this.handleConfirm} >
           <div className="col-md-10">
             <label >Description</label>
-            <input value={this.description} className="form-control" onChange={this.handleDescChange} type="text" placeholder="Type description for track..." />
+            <input ref={(input) => this.descInput = input} className="form-control" onChange={this.handleDescChange} type="text" placeholder="Type description for track..." />
           </div>
           <div className="col-md-10 mt-3">
             <label title="If set, timer will automatically start when the time comes.">Desired time to start (optional)</label>
-            <input value={this.booktime} type="datetime-local" className="form-control" onChange={this.handleBookTimeChange} />
+            <input ref={(input) => this.bookInput = input} type="datetime-local" className="form-control" onChange={this.handleBookTimeChange} />
           </div>
 
         </Modal>

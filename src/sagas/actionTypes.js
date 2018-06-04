@@ -22,7 +22,7 @@ export const PAGE_CHANGE_REQ = 'PAGE_CHANGE_REQ';
 export const PAGE_CHANGE = 'PAGE_CHANGE';
 export const PAGE_CHANGE_FAIL = 'PAGE_CHANGE_FAIL';
 
-export const startTrackReq = (description, booktime = '') => ({
+export const startTrackReq = (description = '', booktime = '') => ({
   type: START_TRACK_REQ,
   description,
   booktime
