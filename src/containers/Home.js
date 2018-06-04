@@ -47,8 +47,8 @@ class Home extends Component {
           <PaginationBar
             page={this.props.trackList.page || 1}
             total={this.props.trackList.total || 1}
-            pageNext={this.props.pageChange.bind(this, 'next')}
-            pagePrev={this.props.pageChange.bind(this, 'prev')}
+            pageNext={this.props.pageChange.bind(this, 'next', this.props.trackList.sort)}
+            pagePrev={this.props.pageChange.bind(this, 'prev', this.props.trackList.sort)}
           ></PaginationBar>
         </div>
 
@@ -61,12 +61,12 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div className="container">
+        <div className="container" style={{marginBottom: '150px'}}>
           <h2 className="text-center text-lg my-5 pt-3 mx-auto">Welcome to Tracker</h2>
           <div className="row">
             <div className="col-md-3">
               <button className="btn btn-primary mx-3 my-2" onClick={this.addTrack}>Add Track</button>
-              <span className="text-secondary">Total Tracks:</span><span className="text-primary">{this.props.trackList.total}</span>
+              <span className="text-secondary">Total: </span><span className="text-primary">{this.props.trackList.total}</span>
             </div>
             <div className="col-md-6">
 

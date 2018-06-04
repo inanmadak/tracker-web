@@ -2,6 +2,7 @@ import * as actionTypes from './actionTypes';
 import TrackResource from '../resources/TrackResource';
 import { delay } from 'redux-saga';
 import { call, put, all, takeLatest, select, take } from 'redux-saga/effects';
+import * as selectors from './selectors';
 
 
 export function* listTracks(params) {
@@ -16,7 +17,7 @@ export function* listTracks(params) {
 
 }
 
-function* startTrack(params) {
+export function* startTrack(params) {
   try {
     const track = yield call(TrackResource.start, params.description);
     yield put({ type: actionTypes.START_TRACK, payload: track })
@@ -25,7 +26,7 @@ function* startTrack(params) {
   }
 }
 
-function* stopTrack(params) {
+export function* stopTrack(params) {
   try {
     const track = yield call(TrackResource.stop, params.id);
     yield put({ type: actionTypes.STOP_TRACK, payload: track });
@@ -34,11 +35,9 @@ function* stopTrack(params) {
   }
 }
 
-function* searchTrack(params) {
+export function* searchTrack(params) {
   try {
-    //const state = yield select();
-    console.log(params)
-    yield delay(500);
+    yield delay(300);
     yield put({type: actionTypes.SEARCH_TRACKS, payload: params.text})
     const tracks = yield call(listTracks, params.page, params.sort, params.text);
 
@@ -47,7 +46,7 @@ function* searchTrack(params) {
   }
 }
 
-function* deleteTrack(params) {
+export function* deleteTrack(params) {
   try {
     const res = yield call(TrackResource.delete, params.id);
     yield put({ type: actionTypes.DELETE_TRACK, payload: res });
@@ -106,17 +105,18 @@ export function* pageChangeReq(params) {
   let p = 1;
 
   while(true){
-    const { to, sort } = yield take(actionTypes.PAGE_CHANGE_REQ);
 
     const state = yield select();
+
+    const { to, sort } = yield take(actionTypes.PAGE_CHANGE_REQ);
 
     //TODO: API always returns 10 per page. For now harcoded.
     if (to === 'next') {
       p = (state.trackList.page < state.trackList.total) ? (state.trackList.page + 1) : state.trackList.total;
-      yield call(listTracks, {page: p})
-    } else if (to === 'prev') {
+      yield call(listTracks, {page: p, sort: sort})
+    } else {
       p = (state.trackList.page > 1) ? (state.trackList.page - 1) : 1;
-      yield call(listTracks, {page: p});
+      yield call(listTracks, {page: p, sort: sort});
     }
   }
   
