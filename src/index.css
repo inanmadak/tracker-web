@@ -18,3 +18,42 @@ body {
   opacity: .85;
   border-radius: 4px;
 }
+
+.auth-container{
+  width: 500px;
+  margin: 50px auto;
+  background-color: white;
+  opacity: .85;
+  border-radius: 3px;
+  padding: 10px 30px;
+}
+
+.form-custom {
+  height: 400px;
+  border-bottom: 2px solid limegreen;
+  padding: 15px;
+  margin: 50px 0px;
+}
+
+.form-custom input{
+  border: none;
+  border-radius: 0px;
+  border-bottom: 1px solid lightslategray;
+}
+
+.form-custom input:focus, .form-custom input:active{
+  border-color: slateblue;
+  outline: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: ghostwhite;
+  box-shadow: 0px 10px 10px 0px rgba(69, 18, 211, 0.75) !important;
+  border-radius: 3px;
+}
+
+.form-custom label{
+  color: #222;
+  font-weight: 600;
+  /* text-shadow: 2px 2px 20px dodgerblue; */
+}
+
