@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default class Signup extends React.Component {
+export default class Login extends React.Component{
 
-  constructor(props) {
+  constructor(props){
     super(props);
 
     this.state = {
@@ -13,21 +13,18 @@ export default class Signup extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(e) {
+  handleChange(e){
 
-    console.log(e.target.name);
-    if (e.target.name) {
-
-    }
   }
 
-  render() {
+
+  render(){
     return (
       <div className="auth-container">
         <div className="row mt-5">
           <div className="col-md-12">
             <div className="form-custom">
-              <h2 className="title">SIGNUP</h2>
+              <h2 className="title">LOGIN</h2>
               <form className="form form-horizontal">
                 <div className="form-group">
                   <label>Email</label>
@@ -48,6 +45,4 @@ export default class Signup extends React.Component {
       </div>
     )
   }
-
 }
-

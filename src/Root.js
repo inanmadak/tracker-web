@@ -7,6 +7,7 @@ import Home from './containers/Home';
 import Signup from './components/Signup';
 import reducers from './reducers';
 import { rootSaga } from './sagas';
+import Login from './components/Login';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(reducers, applyMiddleware(sagaMiddleware));
@@ -21,6 +22,7 @@ export default class Root extends React.Component {
           <Switch>
             <Route exact path="/" component={Home}></Route>
             <Route path="/signup" component={Signup}></Route>
+            <Route path="/login" component={Login}></Route>
           </Switch>
         </BrowserRouter>
       </Provider>
